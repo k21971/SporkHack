@@ -5499,7 +5499,7 @@ next_opcode:
     remove_boundary_syms();
     wallification(1, 0, COLNO-1, ROWNO-1);
 
-    flip_level_rnd(coder->allow_flips);
+/*    flip_level_rnd(coder->allow_flips);*/
 
     count_features();
 

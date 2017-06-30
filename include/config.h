@@ -155,7 +155,7 @@
 #define NEWS "news"		/* the file containing the latest hack news */
 #define PANICLOG "paniclog"	/* log of panic and impossible events */
 #define DUMP_LOG				 /* turn on dumping */
-#define DUMP_FN "dumps/%n.lastlog"	 /* dump goes here */
+#define DUMP_FN "/dgldir/userdata/%n/sporkhack/dumplog/%t.txt"
 
 #define SERVER_ADMIN_MSG "admin_msg"
 
@@ -190,7 +190,7 @@
  *	a tar-like file, thus making a neater installation.  See *conf.h
  *	for detailed configuration.
  */
-#define DLB /* not supported on all platforms */
+//#define DLB /* not supported on all platforms */
 
 /*
  *	Defining INSURANCE slows down level changes, but allows games that

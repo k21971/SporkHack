@@ -101,6 +101,81 @@ extern const char * const killed_by_prefix[];	/* from topten.c */
 FILE *dump_fp = (FILE *)0;  /* file pointer for dumps */
 /* functions dump_init, dump_exit and dump are from the dump patch */
 
+STATIC_OVL
+char *
+dump_format_str(char *str)
+{
+    static char buf[512];
+    char *f, *p, *end;
+    int ispercent = 0;
+
+    buf[0] = '\0';
+
+    if (!str) return NULL;
+
+    f = str;
+    p = buf;
+    end = buf + sizeof(buf) - 10;
+
+    while (*f) {
+      if (ispercent) {
+       switch (*f) {
+       case 't':
+         snprintf (p, end + 1 - p, "%ld", u.ubirthday);
+         while (*p != '\0')
+           p++;
+         break;
+        case 'N':
+          *p = plname[0];
+         p++;
+         *p = '\0';
+         break;
+       case 'n':
+         snprintf (p, end + 1 - p, "%s", plname);
+         while (*p != '\0')
+           p++;
+         break;
+       default:
+         *p = *f;
+         if (p < end)
+           p++;
+       }
+       ispercent = 0;
+      } else {
+       if (*f == '%')
+         ispercent = 1;
+       else {
+         *p = *f;
+         if (p < end)
+           p++;
+       }
+      }
+      f++;
+    }
+    *p = '\0';
+
+    return buf;
+}
+
+
+void
+dump_init ()
+{
+  if (dump_fn[0]) {
+    mode_t dumpmode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+    char new_dump_fn[512];
+    Sprintf(new_dump_fn, "%s", dump_format_str(dump_fn));
+    dump_fp = fopen (new_dump_fn, "w");
+    chmod(new_dump_fn, dumpmode);
+    if (!dump_fp) {
+      pline("Can't open %s for output.", dump_fn);
+      pline("Dump file not created.");
+    }
+  }
+}
+
+
+#if 0
 void
 dump_init ()
 {
@@ -152,6 +227,7 @@ dump_init ()
     }
   }
 }
+#endif /* 0 */
 
 void
 dump_exit ()
