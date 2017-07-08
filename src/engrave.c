@@ -267,6 +267,7 @@ unsigned
 nengr_at(x, y)
 	xchar x, y;
 {
+	const char *s = "Elbereth";
 	register struct engr *ep = engr_at(x, y);
 	unsigned count = 0;
 	const char *p;
