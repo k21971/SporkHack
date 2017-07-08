@@ -275,7 +275,7 @@ nengr_at(x, y)
 		return 0;
 	
 	p = ep->engr_txt;	
-	while (strstri(p)) {
+	while (strstri(p, p)) {
 		count++;
 		p += 8;
 	}
