@@ -1828,6 +1828,22 @@ int final;
 		enl_msg(You_, "have not wished", "did not wish",
 			" for any artifacts");
 	}
+	
+#ifdef ELBERETH_CONDUCT
+#ifdef ELBERETH
+	/* no point displaying the conduct if Elbereth doesn't do anything */
+	if (u.uconduct.elbereths) {
+		Sprintf(buf, "engraved Elbereth %ld time%s",
+			u.uconduct.elbereths, plur(u.uconduct.elbereths));
+		you_have_X(buf);
+	}
+#ifdef WIZARD
+	else if (wizard) {
+		you_have_never("engraved Elbereth");
+	}
+#endif /* WIZARD */
+#endif /* ELBERETH */
+#endif /* ELBERETH_CONDUCT */
 
 	/* Pop up the window and wait for a key */
 	display_nhwindow(en_win, TRUE);
