@@ -1937,7 +1937,7 @@ int final;
 	}
 	
 	if (!u.uconduct.elbereths)
-	    dump("", " You never engraved Elbereth");
+	    dump("", "  You never engraved Elbereth");
 	else {
 	    Sprintf(buf, "engraved Elbereth %ld time%s",
 		    u.uconduct.elbereths, plur(u.uconduct.elbereths));
