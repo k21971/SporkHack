@@ -10,17 +10,17 @@
 DATESTAMP=`date +%Y%m%d-%H%M%S`
 NAO_CHROOT="/opt/nethack/hardfought.org"
 # already compiled versions of dgl and nethack
-GRUNTHACK_GIT="/home/build/sporkhack"
+SPORKHACK_GIT="/home/build/sporkhack"
 # the user & group from dgamelaunch config file.
 USRGRP="games:games"
 # fixed data to copy (leave blank to skip)
-GH_GIT="/home/build/sporkhack"
+SP_GIT="/home/build/sporkhack"
 # HACKDIR from include/config.h; aka nethack subdir inside chroot
 # Make a new one each time save compat is broken
-#GHSUBDIR="sporkhack_new"
-GHSUBDIR="sporkhack"
+#SPSUBDIR="sporkhack_new"
+SPSUBDIR="sporkhack"
 #for combining xlogfile, etc on minor version bump
-#GH_LOG_SYMLINK_TARGET="/sporkhack/var"
+#SP_LOG_SYMLINK_TARGET="/sporkhack/var"
 # END OF CONFIG
 ##############################################################################
 
@@ -50,63 +50,63 @@ chown "$USRGRP" "$NAO_CHROOT/dgldir/inprogress-sp"
 mkdir -p "$NAO_CHROOT/dgldir/extrainfo-sp"
 chown "$USRGRP" "$NAO_CHROOT/dgldir/extrainfo-sp"
 
-echo "Making $NAO_CHROOT/$GHSUBDIR"
-mkdir -p "$NAO_CHROOT/$GHSUBDIR"
+echo "Making $NAO_CHROOT/$SPSUBDIR"
+mkdir -p "$NAO_CHROOT/$SPSUBDIR"
 
-GRUNTHACKBIN="$GRUNTHACK_GIT/src/sporkhack"
-if [ -n "$GRUNTHACKBIN" -a ! -e "$GRUNTHACKBIN" ]; then
-  errorexit "Cannot find SporkHack binary $GRUNTHACKBIN"
+SPORKHACKBIN="$SPORKHACK_GIT/src/sporkhack"
+if [ -n "$SPORKHACKBIN" -a ! -e "$SPORKHACKBIN" ]; then
+  errorexit "Cannot find SporkHack binary $SPORKHACKBIN"
 fi
 
-if [ -n "$GRUNTHACKBIN" -a -e "$GRUNTHACKBIN" ]; then
-  echo "Copying $GRUNTHACKBIN"
-  cd "$NAO_CHROOT/$GHSUBDIR"
-  GHBINFILE="`basename $GRUNTHACKBIN`-$DATESTAMP"
-  cp "$GRUNTHACKBIN" "$GHBINFILE"
-  ln -fs "$GHBINFILE" sporkhack
-  LIBS="$LIBS `findlibs $GRUNTHACKBIN`"
+if [ -n "$SPORKHACKBIN" -a -e "$SPORKHACKBIN" ]; then
+  echo "Copying $SPORKHACKBIN"
+  cd "$NAO_CHROOT/$SPSUBDIR"
+  SPBINFILE="`basename $SPORKHACKBIN`-$DATESTAMP"
+  cp "$SPORKHACKBIN" "$SPBINFILE"
+  ln -fs "$SPBINFILE" sporkhack
+  LIBS="$LIBS `findlibs $SPORKHACKBIN`"
   cd "$NAO_CHROOT"
 fi
 
-echo "Copying NetHack playground stuff"
-cp "$GRUNTHACK_GIT/dat/nhdat" "$NAO_CHROOT/$GHSUBDIR/var"
-chmod 644 "$NAO_CHROOT/$GHSUBDIR/var/nhdat"
+echo "Copying SporkHack playground stuff"
+cp "$SPORKHACK_GIT/dat/nhdat" "$NAO_CHROOT/$SPSUBDIR/var"
+chmod 644 "$NAO_CHROOT/$SPSUBDIR/var/nhdat"
 
-echo "Creating NetHack variable dir stuff."
-mkdir -p "$NAO_CHROOT/$GHSUBDIR/var"
-chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var"
-mkdir -p "$NAO_CHROOT/$GHSUBDIR/var/save"
-chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var/save"
+echo "Creating SporkHack variable dir stuff."
+mkdir -p "$NAO_CHROOT/$SPSUBDIR/var"
+chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var"
+mkdir -p "$NAO_CHROOT/$SPSUBDIR/var/save"
+chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/save"
 
 #symlink the logs to the symlink target
-if [ -z "$GH_LOG_SYMLINK_TARGET" -o ! -e "$NAO_CHROOT$GH_LOG_SYMLINK_TARGET" -o "$GH_LOG_SYMLINK_TARGET" = "/$GHSUBDIR/var" ]; then
+if [ -z "$SP_LOG_SYMLINK_TARGET" -o ! -e "$NAO_CHROOT$SP_LOG_SYMLINK_TARGET" -o "$SP_LOG_SYMLINK_TARGET" = "/$SPSUBDIR/var" ]; then
   # don't symlink file to itself
-  touch "$NAO_CHROOT/$GHSUBDIR/var/logfile"
-  chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var/logfile"
+  touch "$NAO_CHROOT/$SPSUBDIR/var/logfile"
+  chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/logfile"
   touch "$NAO_CHROOT/$GHSUBDIR/var/record"
-  chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var/record"
-  touch "$NAO_CHROOT/$GHSUBDIR/var/xlogfile"
-  chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var/xlogfile"
-  touch "$NAO_CHROOT/$GHSUBDIR/var/livelog"
-  chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var/livelog"
-  touch "$NAO_CHROOT/$GHSUBDIR/var/perm"
-  chown -R "$USRGRP" "$NAO_CHROOT/$GHSUBDIR/var/perm"
+  chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/record"
+  touch "$NAO_CHROOT/$SPSUBDIR/var/xlogfile"
+  chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/xlogfile"
+  touch "$NAO_CHROOT/$SPSUBDIR/var/livelog"
+  chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/livelog"
+  touch "$NAO_CHROOT/$SPSUBDIR/var/perm"
+  chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/perm"
 else
-  if [ -f $NAO_CHROOT/$GHSUBDIR/var/xlogfile ]; then
-    errorexit "$NAO_CHROOT/$GHSUBDIR/var/xlogfile exists as a regular file. Proceeding will casuse data loss."
+  if [ -f $NAO_CHROOT/$SPSUBDIR/var/xlogfile ]; then
+    errorexit "$NAO_CHROOT/$SPSUBDIR/var/xlogfile exists as a regular file. Proceeding will casuse data loss."
   fi
-  ln -fs $GH_LOG_SYMLINK_TARGET/xlogfile $NAO_CHROOT/$GHSUBDIR/var
-  ln -fs $GH_LOG_SYMLINK_TARGET/livelog $NAO_CHROOT/$GHSUBDIR/var
-  ln -fs $GH_LOG_SYMLINK_TARGET/record $NAO_CHROOT/$GHSUBDIR/var
-  ln -fs $GH_LOG_SYMLINK_TARGET/logfile $NAO_CHROOT/$GHSUBDIR/var
-  ln -fs $GH_LOG_SYMLINK_TARGET/perm $NAO_CHROOT/$GHSUBDIR/var
+  ln -fs $SP_LOG_SYMLINK_TARGET/xlogfile $NAO_CHROOT/$SPSUBDIR/var
+  ln -fs $SP_LOG_SYMLINK_TARGET/livelog $NAO_CHROOT/$SPSUBDIR/var
+  ln -fs $SP_LOG_SYMLINK_TARGET/record $NAO_CHROOT/$SPSUBDIR/var
+  ln -fs $SP_LOG_SYMLINK_TARGET/logfile $NAO_CHROOT/$SPSUBDIR/var
+  ln -fs $SP_LOG_SYMLINK_TARGET/perm $NAO_CHROOT/$SPSUBDIR/var
 fi
 
-RECOVER="$GRUNTHACK_GIT/util/recover"
+RECOVER="$SPORKHACK_GIT/util/recover"
 
 if [ -n "$RECOVER" -a -e "$RECOVER" ]; then
   echo "Copying $RECOVER"
-  cp "$RECOVER" "$NAO_CHROOT/$GHSUBDIR/var"
+  cp "$RECOVER" "$NAO_CHROOT/$SPSUBDIR/var"
   LIBS="$LIBS `findlibs $RECOVER`"
   cd "$NAO_CHROOT"
 fi
