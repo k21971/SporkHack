@@ -68,12 +68,13 @@ if [ -n "$SPORKHACKBIN" -a -e "$SPORKHACKBIN" ]; then
   cd "$NAO_CHROOT"
 fi
 
+echo "Creating SporkHack variable dir stuff."
+mkdir -p "$NAO_CHROOT/$SPSUBDIR/var"
+
 echo "Copying SporkHack playground stuff"
 cp "$SPORKHACK_GIT/dat/nhdat" "$NAO_CHROOT/$SPSUBDIR/var"
 chmod 644 "$NAO_CHROOT/$SPSUBDIR/var/nhdat"
 
-echo "Creating SporkHack variable dir stuff."
-mkdir -p "$NAO_CHROOT/$SPSUBDIR/var"
 chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var"
 mkdir -p "$NAO_CHROOT/$SPSUBDIR/var/save"
 chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/save"
