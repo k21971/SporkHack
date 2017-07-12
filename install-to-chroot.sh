@@ -83,7 +83,7 @@ if [ -z "$SP_LOG_SYMLINK_TARGET" -o ! -e "$NAO_CHROOT$SP_LOG_SYMLINK_TARGET" -o 
   # don't symlink file to itself
   touch "$NAO_CHROOT/$SPSUBDIR/var/logfile"
   chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/logfile"
-  touch "$NAO_CHROOT/$GHSUBDIR/var/record"
+  touch "$NAO_CHROOT/$SPSUBDIR/var/record"
   chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/record"
   touch "$NAO_CHROOT/$SPSUBDIR/var/xlogfile"
   chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/xlogfile"
