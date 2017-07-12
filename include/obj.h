@@ -92,6 +92,7 @@ struct obj {
 #define OATTACHED_UNUSED3 3
 
 	Bitfield(in_use,1);	/* for magic items before useup items */
+	Bitfield(bypass,1);	/* mark this as an object to be skipped by bhito() */
 	Bitfield(was_thrown,1); /* for pickup_thrown */
 	/* 5 free bits */
 
