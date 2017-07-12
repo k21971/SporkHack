@@ -92,8 +92,8 @@ struct obj {
 #define OATTACHED_UNUSED3 3
 
 	Bitfield(in_use,1);	/* for magic items before useup items */
-	Bitfield(bypass,1);	/* mark this as an object to be skipped by bhito() */
-	/* 6 free bits */
+	Bitfield(was_thrown,1); /* for pickup_thrown */
+	/* 5 free bits */
 
 	int	corpsenm;	/* type of corpse is mons[corpsenm] */
 #define leashmon  corpsenm	/* gets m_id of attached pet */
