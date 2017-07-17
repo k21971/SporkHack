@@ -161,6 +161,7 @@ getlock()
 		    (void) printf("\n  n - Cancel");
 		    (void) printf("\n\n  => ");
 		    (void) fflush(stdout);
+		    do {
 			c = getchar();
 		    } while (!index("rRyYnN", c) && c != -1);
 		    (void) printf("\e[7A"); /* cursor up 7 */
