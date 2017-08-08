@@ -481,11 +481,6 @@ E void FDECL(assign_rogue_graphics, (BOOLEAN_P));
 
 /* ### dungeon.c ### */
 
-E void NDECL(dump_definition_list_start);
-E void FDECL(dump_definition_list_dd, (const char *));
-E void FDECL(dump_definition_list_dt, (const char *));
-E void NDECL(dump_definition_list_end);
-
 E void FDECL(save_dungeon, (int,BOOLEAN_P,BOOLEAN_P));
 E void FDECL(restore_dungeon, (int));
 E void FDECL(insert_branch, (branch *,BOOLEAN_P));
