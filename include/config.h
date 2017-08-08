@@ -210,7 +210,7 @@
  * otherwise it will be the current directory.
  */
 # ifndef HACKDIR
-#  define HACKDIR "/sporkhack/var"
+#  define HACKDIR "/sporkhack-0.6.5/var"
 # endif
 
 /*
