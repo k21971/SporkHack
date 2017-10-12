@@ -951,6 +951,7 @@ die:
 		disclose(how, taken);
 #if defined(DUMP_LOG) && defined(DUMPMSGS)
 		if (lastmsg >= 0) {
+                  int i;
 		  dump ("", "Latest messages");
 		  for (i = lastmsg + 1; i < DUMPMSGS; i++) {
 		    if (msgs[i] && strcmp(msgs[i], "") )
