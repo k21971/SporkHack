@@ -18,9 +18,9 @@ SP_GIT="/home/build/sporkhack"
 # HACKDIR from include/config.h; aka nethack subdir inside chroot
 # Make a new one each time save compat is broken
 #SPSUBDIR="sporkhack_new"
-SPSUBDIR="sporkhack"
+SPSUBDIR="sporkhack-0.6.5"
 #for combining xlogfile, etc on minor version bump
-#SP_LOG_SYMLINK_TARGET="/sporkhack/var"
+#SP_LOG_SYMLINK_TARGET="/sporkhack-0.6.5/var"
 # END OF CONFIG
 ##############################################################################
 
@@ -45,8 +45,8 @@ set -e
 umask 022
 
 echo "Creating inprogress and userdata directories"
-mkdir -p "$NAO_CHROOT/dgldir/inprogress-sp"
-chown "$USRGRP" "$NAO_CHROOT/dgldir/inprogress-sp"
+mkdir -p "$NAO_CHROOT/dgldir/inprogress-sp065"
+chown "$USRGRP" "$NAO_CHROOT/dgldir/inprogress-sp065"
 mkdir -p "$NAO_CHROOT/dgldir/extrainfo-sp"
 chown "$USRGRP" "$NAO_CHROOT/dgldir/extrainfo-sp"
 
@@ -126,5 +126,3 @@ for lib in $LIBS; do
 done
 
 echo "Finished."
-
-

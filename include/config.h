@@ -157,6 +157,7 @@
 #define PANICLOG "paniclog"	/* log of panic and impossible events */
 #define DUMP_LOG				 /* turn on dumping */
 #define DUMP_FN "/dgldir/userdata/%N/%n/sporkhack/dumplog/%t.sp.txt"
+#define DUMPMSGS 20
 
 #define SERVER_ADMIN_MSG "admin_msg"
 
