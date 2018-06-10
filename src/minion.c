@@ -15,13 +15,12 @@ struct monst *mon;
 	aligntyp atyp;
 	struct monst *mtmp;
 
-	/* Wielded Demonbane prevents demons from gating in others. */
-	if (uwep && uwep->oartifact == ART_DEMONBANE && is_demon(mon->data)) {
-		pline("%s looks puzzled for a moment.",Monnam(mon));
-		return;
-	}
-
 	if (mon) {
+	    /* Wielded Demonbane prevents demons from gating in others. */
+            if (uwep && uwep->oartifact == ART_DEMONBANE && is_demon(mon->data)) {
+                pline("%s looks puzzled for a moment.",Monnam(mon));
+                return;
+            }
 	    ptr = mon->data;
 	    atyp = (ptr->maligntyp==A_NONE) ? A_NONE : sgn(ptr->maligntyp);
 	    if (mon->ispriest || mon->data == &mons[PM_ALIGNED_PRIEST]
