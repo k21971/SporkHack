@@ -4225,6 +4225,9 @@ void
 makewish()
 {
 	static char buf[BUFSZ] = "";
+#ifdef LIVELOG
+        char origbuf[BUFSZ];
+#endif
 	struct obj *otmp, nothing;
 	int tries = 0;
 
@@ -4233,6 +4236,9 @@ makewish()
 retry:
 	getlin("For what do you wish?", buf);
 	if(buf[0] == '\033') buf[0] = 0;
+#ifdef LIVELOG
+        strcpy(origbuf, buf);
+#endif
 	stripctrl(buf);
 	trim(buf);
 	/*
@@ -4258,6 +4264,12 @@ retry:
 	u.uconduct.wishes++;
 
 	if (otmp != &zeroobj) {
+
+#ifdef LIVELOG
+            char llog[BUFSZ+20];
+            Sprintf(llog, "wished for \"%s\"", mungspaces(origbuf));
+            livelog_write_string(llog);
+#endif
 
 #ifdef WISH_TRACKER
 		/* write it out to our universal wishtracker file */

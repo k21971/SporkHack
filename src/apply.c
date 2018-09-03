@@ -2631,7 +2631,10 @@ use_pole (obj)
 	     * non-silver weapon on a shade?)
 	     */
 	    if (mtmp->mhp < oldhp)
-		u.uconduct.weaphit++;
+                if(!u.uconduct.weaphit++)
+                    #ifdef LIVELOG
+                    { livelog_conduct("hit with a wielded weapon for the first time"); }
+                    #endif
 		 if (DEADMONSTER(mtmp)) polemonst = 0;	 /* clean up pre-emptively */
 	} else
 	    /* Now you know that nothing is there... */

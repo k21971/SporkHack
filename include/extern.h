@@ -703,6 +703,11 @@ E void NDECL(delete_whereis);
 E void FDECL(trackwish,(char *));
 E void FDECL(makeannounce,(char *));
 #endif
+#ifdef LIVELOG
+E void FDECL(livelog_write_string, (char *));
+E void VDECL(livelog_printf, (const char *,...)) PRINTF_F(1,2);
+E void VDECL(livelog_conduct, (const char *,...)) PRINTF_F(1,2);
+#endif
 
 /* ### fountain.c ### */
 
