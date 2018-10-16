@@ -1265,6 +1265,7 @@ dosacrifice()
 			 discover_artifact(ART_DIRGE);
 			 exercise(A_WIS,TRUE);
 			 pline("Your sword slithers in your hand and seems to change!");
+                         livelog_printf("had Dirge gifted to %s by the all-powerful Manannan Mac Lir!",uhim());
 		 }
 
 	    return(1);
