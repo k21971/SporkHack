@@ -1254,7 +1254,7 @@ dosacrifice()
 	    else useupf(otmp, 1L);
 
 		 /* create Dirge from player's longsword here if possible */
-		 if (u.ualign.type == A_CHAOTIC && Role_if(PM_KNIGHT) && 
+		 if (u.ualign.type == A_CHAOTIC && Role_if(PM_KNIGHT) &&
 				 !u.ugangr && u.ualign.record > 0 &&
 				 uwep && uwep->otyp == LONG_SWORD && !uwep->oartifact &&
 				 !exist_artifact(LONG_SWORD, artiname(ART_DIRGE))) {
@@ -1265,7 +1265,10 @@ dosacrifice()
 			 discover_artifact(ART_DIRGE);
 			 exercise(A_WIS,TRUE);
 			 pline("Your sword slithers in your hand and seems to change!");
-                         livelog_printf("had Dirge gifted to %s by the all-powerful Manannan Mac Lir!",uhim());
+                         #ifdef LIVELOG
+                             livelog_printf("had %s gifted to %s by the grace of %s", xname(otmp), uhim(), u_gname())
+                         #endif
+                         ;
 		 }
 
 	    return(1);
@@ -1335,7 +1338,7 @@ dosacrifice()
 		pline("A cloud of %s smoke surrounds you...",
 		      hcolor((const char *)"orange"));
 		done(ESCAPED);
-	    } else { 
+	    } else {
 			/* Would this action put you in positive standing? */
 			adjalign(10);
 			/* You'd better hope so... */
@@ -1457,7 +1460,7 @@ dosacrifice()
 			      hcolor(
 			      u.ualign.type == A_LAWFUL ? NH_WHITE :
 			      u.ualign.type ? NH_BLACK : (const char *)"gray"));
-			 /* 
+			 /*
 			  * The old test here started with "if rnl(u.ulevel) > 6", thus ensuring
 			  * that the vast majority of altars converted in the dungeon never,
 			  * EVER pissed off the owner due to the stilted effect of luck.
@@ -1465,7 +1468,7 @@ dosacrifice()
 			  * We can fix that.  god should be pissed if you muck up his altars.
 			  * If you muck up his temples, he should be even more pissed.
 			  */
-		    if (u.ualign.record > 0 && rnd(u.ualign.record) > 
+		    if (u.ualign.record > 0 && rnd(u.ualign.record) >
 					 (3*ALIGNLIM)/(temple_occupied(u.urooms) ? 12 : u.ulevel)) {
 				summon_minion(altaralign, TRUE);
 			 }
@@ -1536,26 +1539,26 @@ dosacrifice()
 		  *
 		  * The player can gain an artifact;
 	     * The chance goes down as the number of artifacts goes up.
-		  * 
+		  *
 		  * The player can also get handed just a plain old hunk of weaponry
-		  * or piece of armor, but it will be blessed, +3 to +5, fire/rustproof, and 
-		  * if it's a weapon, it'll be in one of the player's available skill 
-		  * slots. The lower level you are, the more likely it is that you'll 
+		  * or piece of armor, but it will be blessed, +3 to +5, fire/rustproof, and
+		  * if it's a weapon, it'll be in one of the player's available skill
+		  * slots. The lower level you are, the more likely it is that you'll
 		  * get a hunk of ordinary junk rather than an artifact.
 		  *
 		  * Note that no artifact is guaranteed; it's still subject to the
 		  * chances of generating one of those in the first place; these are
 		  * just the chances that an artifact will even be considered as a gift.
 		  *
-		  * level  4: 10% chance  level  9: 20% chance  level 12: 30% chance 
-		  * level 14: 40% chance  level 17: 50% chance  level 19: 60% chance 
-		  * level 21: 70% chance  level 23: 80% chance  level 24: 90% chance 
+		  * level  4: 10% chance  level  9: 20% chance  level 12: 30% chance
+		  * level 14: 40% chance  level 17: 50% chance  level 19: 60% chance
+		  * level 21: 70% chance  level 23: 80% chance  level 24: 90% chance
 		  * level 26: 100% chance
 		  */
 
 		 if (rn2(10) >= (nchance*nchance)/100) {
 			 if (u.uluck >= 0 && !rn2(6 + (2 * u.ugifts))) {
-				 int typ, ncount = 0; 
+				 int typ, ncount = 0;
 				 if (rn2(2)) {
 					/* don't give unicorn horns or anything the player's restricted in */
 					do {
