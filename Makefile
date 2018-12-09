@@ -16,11 +16,11 @@ export VCS_DESCRIPTION = git $(shell git rev-parse --short HEAD)
 # MAKE = make
 
 # make NetHack
-PREFIX	 = /opt/nethack/hardfought.org
+PREFIX	 = /opt/nethack/chroot
 GAME     = sporkhack
 # GAME     = nethack.prg
 GAMEUID  = games
-GAMEGRP  = games
+GAMEGRP  = bin
 
 # Permissions - some places use setgid instead of setuid, for instance
 # See also the option "SECURE" in include/config.h
@@ -37,7 +37,7 @@ DIRPERM  = 0755
 # therefore there should not be anything in GAMEDIR that you want to keep
 # (if there is, you'll have to do the installation by hand or modify the
 # instructions)
-GAMEDIR  = $(PREFIX)/sporkhack
+GAMEDIR  = $(PREFIX)/sporkhack-0.6.5
 VARDIR  = $(GAMEDIR)/var
 SHELLDIR = /tmp
 
