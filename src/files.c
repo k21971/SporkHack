@@ -1980,6 +1980,8 @@ char		*tmp_levels;
 		else if (!strcasecmp("noshow", msgtype)) typ = MSGTYP_NOSHOW;
 		else if (!strcasecmp("more", msgtype)) typ = MSGTYP_STOP;
 		else if (!strcasecmp("stop", msgtype)) typ = MSGTYP_STOP;
+                /* 'alert' will fallback to 'stop' behaviour if windowport does not support it */
+		else if (!strcasecmp("alert", msgtype)) typ = MSGTYP_ALERT;
 		if (typ != MSGTYP_NORMAL) {
 		    msgpline_add(typ, pattern);
 		}

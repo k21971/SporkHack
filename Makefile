@@ -20,7 +20,7 @@ PREFIX	 = /opt/nethack/chroot
 GAME     = sporkhack
 # GAME     = nethack.prg
 GAMEUID  = games
-GAMEGRP  = bin
+GAMEGRP  = games
 
 # Permissions - some places use setgid instead of setuid, for instance
 # See also the option "SECURE" in include/config.h
@@ -42,7 +42,7 @@ VARDIR  = $(GAMEDIR)/var
 SHELLDIR = /tmp
 
 # per discussion in Install.X11 and Install.Qt
-VARDATND = 
+VARDATND =
 # VARDATND = x11tiles NetHack.ad pet_mark.xbm
 # VARDATND = x11tiles NetHack.ad pet_mark.xbm rip.xpm
 # for Atari/Gem
