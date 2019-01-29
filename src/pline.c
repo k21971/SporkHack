@@ -107,6 +107,9 @@ pline VA_DECL(const char *, line)
 	typ = msgpline_type(line);
 
 #if defined(DUMP_LOG) && defined(DUMPMSGS)
+        if (!strncmp(line, "Unknown command", 15))
+            return;
+
 	if (DUMPMSGS > 0 && !program_state.gameover) {
 	  lastmsg = (lastmsg + 1) % DUMPMSGS;
 	  strncpy(msgs[lastmsg], line, BUFSZ);
