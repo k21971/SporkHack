@@ -1,6 +1,8 @@
 #	NetHack Makefile.
 #	SCCS Id: @(#)Makefile.top	3.4	1995/01/05
 
+export VCS_DESCRIPTION = git $(shell git rev-parse --short HEAD)
+
 # newer makes predefine $(MAKE) to 'make' and do smarter processing of
 # recursive make calls if $(MAKE) is used
 # these makes allow $(MAKE) to be overridden by the environment if someone
@@ -14,7 +16,7 @@
 # MAKE = make
 
 # make NetHack
-PREFIX	 = /opt/nethack/hardfought.org
+PREFIX	 = /opt/nethack/chroot
 GAME     = sporkhack
 # GAME     = nethack.prg
 GAMEUID  = games
@@ -35,12 +37,12 @@ DIRPERM  = 0755
 # therefore there should not be anything in GAMEDIR that you want to keep
 # (if there is, you'll have to do the installation by hand or modify the
 # instructions)
-GAMEDIR  = $(PREFIX)/sporkhack
+GAMEDIR  = $(PREFIX)/sporkhack-0.6.5
 VARDIR  = $(GAMEDIR)/var
 SHELLDIR = /tmp
 
 # per discussion in Install.X11 and Install.Qt
-VARDATND = 
+VARDATND =
 # VARDATND = x11tiles NetHack.ad pet_mark.xbm
 # VARDATND = x11tiles NetHack.ad pet_mark.xbm rip.xpm
 # for Atari/Gem
