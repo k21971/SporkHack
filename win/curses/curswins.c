@@ -302,11 +302,7 @@ curses_del_nhwin(winid wid)
     }
 
     if (!is_main_window(wid)) {
-<<<<<<< HEAD
-        impossible("curses_del_nhwin: wid (%d) out of range. Not a main window.",wid);
-=======
         impossible("curses_del_nhwin: wid %d out of range. Not a main window.", wid);
->>>>>>> bd50d24... curses - change some panics to impossibles.
         return;
     }
 
@@ -397,13 +393,9 @@ void
 curses_get_window_xy(winid wid, int *x, int *y)
 {
     if (!is_main_window(wid)) {
-<<<<<<< HEAD
-        impossible("curses_get_window_xy: wid(%d) out of range. Not a main window.",wid);
-=======
         impossible("curses_get_window_xy: wid %d out of range. Not a main window.", wid);
         *x = 0;
         *y = 0;
->>>>>>> bd50d24... curses - change some panics to impossibles.
         return;
     }
 
@@ -457,13 +449,8 @@ curses_get_window_orientation(winid wid)
 {
     if (!is_main_window(wid)) {
         impossible
-<<<<<<< HEAD
-            ("curses_get_window_orientation: wid(%d) out of range. Not a main window.", wid);
-        return 0;
-=======
             ("curses_get_window_orientation: wid %d out of range. Not a main window.", wid);
         return CENTER;
->>>>>>> bd50d24... curses - change some panics to impossibles.
     }
 
     return nhwins[wid].orientation;
@@ -498,11 +485,7 @@ curses_puts(winid wid, int attr, const char *text)
 
     if (curses_is_menu(wid) || curses_is_text(wid)) {
         if (!curses_menu_exists(wid)) {
-<<<<<<< HEAD
-            impossible("curses_puts: Attempted write to nonexistant window(%d)!",wid);
-=======
             impossible("curses_puts: Attempted write to nonexistant window %d!", wid);
->>>>>>> bd50d24... curses - change some panics to impossibles.
             return;
         }
         identifier = malloc(sizeof (anything));
