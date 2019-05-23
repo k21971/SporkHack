@@ -87,7 +87,7 @@ LFLAGS = -L/usr/X11R6/lib
 # the default values are fine
 
 # flags for debugging:
-CFLAGS = -g -O -I../include
+CFLAGS = -g -O0 -I../include
 
 # CFLAGS = -O -I../include
 # LFLAGS =
