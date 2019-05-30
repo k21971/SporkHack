@@ -8,7 +8,6 @@
 
 #include <errno.h>
 #include <sys/stat.h>
-#include <limits.h>
 #if defined(NO_FILE_LINKS) || defined(SUNOS4) || defined(POSIX_TYPES)
 #include <fcntl.h>
 #endif
@@ -26,8 +25,6 @@ extern void NDECL(linux_mapoff);
 #ifndef NHSTDC
 extern int errno;
 #endif
-
-extern int FDECL(restore_savefile, (char *, const char *));
 
 static struct stat buf;
 
@@ -153,19 +150,17 @@ getlock()
 		(void) close(fd);
 
 		if(iflags.window_inited) {
-		c = yn_function("There is already a game in progress under your name.  Destroy old game [y], Recover it [r], Cancel [n] ?", "ynr", 'n');
-  		} else {
-		    (void) printf("\nThere is already a game in progress under your name. Do what?\n");
-		    (void) printf("\n  y - Destroy old game?");
-		    (void) printf("\n  r - Try to recover it?");
-		    (void) printf("\n  n - Cancel");
-		    (void) printf("\n\n  => ");
+		    c = yn("There is already a game in progress under your name.  Destroy old game?");
+		} else {
+		    (void) printf("\nThere is already a game in progress under your name.");
+		    (void) printf("  Destroy old game? [yn] ");
 		    (void) fflush(stdout);
-			c = getchar();
-		    } while (!index("rRyYnN", c) && c != -1);
-		    (void) printf("\e[7A"); /* cursor up 7 */
-		    (void) printf("\e[J"); /* clear from cursor down */
+		    c = getchar();
+		    (void) putchar(c);
+		    (void) fflush(stdout);
+		    while (getchar() != '\n') ; /* eat rest of line and newline */
 		}
+<<<<<<< HEAD
 		if (c == 'r' || c == 'R') {
 		    if (restore_savefile(lock, fqn_prefix[SAVEPREFIX]) == 0) {
 			const char *msg = "Automatical recovery of save file successful! "
@@ -183,13 +178,16 @@ getlock()
 			goto gotlock;
 		    }
 		} else if (c == 'y' || c == 'Y') {
+=======
+		if(c == 'y' || c == 'Y')
+>>>>>>> parent of 408ee39... add auto recovery
 			if(eraseoldlocks())
 				goto gotlock;
 			else {
 				unlock_file(HLOCK);
 				error("Couldn't destroy old game.");
 			}
-		} else {
+		else {
 			unlock_file(HLOCK);
 			error("%s", "");
 		}
