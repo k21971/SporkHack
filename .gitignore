@@ -68,5 +68,5 @@ include/vis_tab.h
 src/Sysunix
 src/nethack
 src/vis_tab.c
-src/config-h.t
-src/hack-h.t
+src/config.h-t
+src/hack.h-t
