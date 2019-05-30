@@ -2,12 +2,14 @@ Makefile
 
 src/sporkhack
 src/paniclog
+src/Makefile
 util/recover
 util/makedefs
 util/dlb
 util/dgn_comp
 util/lev_comp
 util/tilemap
+util/Makefile
 
 *.diff
 *.patch
@@ -50,6 +52,7 @@ dat/rumors
 dat/dungeon
 dat/dungeon.pdf
 dat/*.lev
+dat/Makefile
 
 */*.d
 */*/*.d
@@ -60,7 +63,10 @@ dat/quest_levs
 dat/spec_levs
 dat/vaults.dat
 doc/Guidebook
+doc/Makefile
 include/vis_tab.h
 src/Sysunix
 src/nethack
 src/vis_tab.c
+src/config-h.t
+src/hack-h.t
