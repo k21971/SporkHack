@@ -160,27 +160,7 @@ getlock()
 		    (void) fflush(stdout);
 		    while (getchar() != '\n') ; /* eat rest of line and newline */
 		}
-<<<<<<< HEAD
-		if (c == 'r' || c == 'R') {
-		    if (restore_savefile(lock, fqn_prefix[SAVEPREFIX]) == 0) {
-			const char *msg = "Automatical recovery of save file successful! "
-			    "Press any key to continue ...\n";
-			fflush(stdout);
-			if (iflags.window_inited) {
-			    pline("%s", msg);
-			} else {
-			const char *msg = "Recovery of save file unsuccessful. "
-			    "Press any key to continue ...\n";
-			    printf("\n\n%s", msg);
-			    fflush(stdout);
-			    c = getchar();
-			}
-			goto gotlock;
-		    }
-		} else if (c == 'y' || c == 'Y') {
-=======
 		if(c == 'y' || c == 'Y')
->>>>>>> parent of 408ee39... add auto recovery
 			if(eraseoldlocks())
 				goto gotlock;
 			else {
