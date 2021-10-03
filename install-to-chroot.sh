@@ -1,5 +1,5 @@
 #!/bin/bash
-# 
+#
 # Ideas and some parts from the original dgl-create-chroot (by joshk@triplehelix.org, modifications by jilles@stack.nl)
 # More by <paxed@alt.org>
 # More by Michael Andrew Streib <dtype@dtype.org>
@@ -10,14 +10,13 @@
 DATESTAMP=`date +%Y%m%d-%H%M%S`
 NAO_CHROOT="/opt/nethack/chroot"
 # already compiled versions of dgl and nethack
-SPORKHACK_GIT="/home/build/sporkhack"
+SPORKHACK_GIT="/home/build/SporkHack"
 # the user & group from dgamelaunch config file.
 USRGRP="games:games"
 # fixed data to copy (leave blank to skip)
-SP_GIT="/home/build/sporkhack"
+SP_GIT="/home/build/SporkHack"
 # HACKDIR from include/config.h; aka nethack subdir inside chroot
 # Make a new one each time save compat is broken
-#SPSUBDIR="sporkhack_new"
 SPSUBDIR="sporkhack-0.6.5"
 #for combining xlogfile, etc on minor version bump
 #SP_LOG_SYMLINK_TARGET="/sporkhack-0.6.5/var"

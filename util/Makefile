@@ -87,10 +87,10 @@ LFLAGS = -L/usr/X11R6/lib
 # the default values are fine
 
 # flags for debugging:
-CFLAGS = -g -O0 -I../include
+CFLAGS = -g3 -O0 -fcommon -Wno-format-overflow -I../include
 
 # CFLAGS = -O -I../include
-# LFLAGS =
+LFLAGS = -g3
 
 LIBS =
 
@@ -106,7 +106,7 @@ LEX      = lex
 # YACC     = bison -y
 # YACC     = byacc
 # LEX      = flex
- 
+
 # these are the names of the output files from YACC/LEX. Under MS-DOS
 # and similar systems, they may differ
 YTABC = y.tab.c

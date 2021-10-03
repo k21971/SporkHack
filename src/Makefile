@@ -149,10 +149,10 @@ LFLAGS = -L/usr/X11R6/lib
 GNOMEINC=-I/usr/lib/glib/include -I/usr/lib/gnome-libs/include -I../win/gnome
 
 # flags for debugging:
-CFLAGS = -g -O0 -I../include
+CFLAGS = -g3 -O0 -fcommon -Wno-format-overflow -I../include
 
 #CFLAGS = -O -I../include
-#LFLAGS =
+LFLAGS = -g3
 
 # The Qt and Be window systems are written in C++, while the rest of
 # NetHack is standard C.  If using Qt, uncomment the LINK line here to get
