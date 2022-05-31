@@ -236,10 +236,12 @@ struct obj *corpse;
 	    if (DEADMONSTER(mtmp)) continue;
 	    mptr = mtmp->data;
 	    if (mtmp->iswiz || mptr == &mons[PM_MEDUSA] ||
-		    mptr->msound == MS_NEMESIS || mptr->msound == MS_LEADER ||
-		    mptr == &mons[PM_VLAD_THE_IMPALER]) {
-				mongone(mtmp);
-		 }
+		mptr->msound == MS_NEMESIS || mptr->msound == MS_LEADER ||
+		mptr == &mons[PM_VLAD_THE_IMPALER]) {
+		mongone(mtmp);
+                if (mtmp == ukiller)
+                    ukiller = (struct monst *) 0;
+	    }
 	}
 #ifdef STEED
 	if (u.usteed) dismount_steed(DISMOUNT_BONES);
@@ -286,7 +288,7 @@ struct obj *corpse;
 			 * he will tend to take all the "good stuff".
 			 *
 			 * He also gets a chance to be removed as well -- hitting Yeenybones
-			 * once is not a big deal, but a persistent upper-dungeon Yeeny from 
+			 * once is not a big deal, but a persistent upper-dungeon Yeeny from
 			 * an unlucky fountain quaffer would be a bit much.
 			 */
 			struct obj* otmp;
@@ -300,12 +302,16 @@ struct obj *corpse;
 
 			for (otmp = level.objects[u.ux][u.uy]; otmp; otmp = otmp2) {
 				otmp2 = otmp->nexthere; /* mpickobj might free otmp */
-				if (!rn2(8) || 
+				if (!rn2(8) ||
 						(greedy && rn2(2) && (otmp->oartifact || Is_dragon_armor(otmp) ||
 							otmp->otyp == AMULET_OF_LIFE_SAVING || otmp->otyp == AMULET_OF_POWER ||
 							otmp->otyp == MAGIC_MARKER || otmp->otyp == UNICORN_HORN))) {
-					if (!touch_artifact(otmp,ukiller)) continue;
-					if (!can_carry(ukiller,otmp)) continue;
+					if (!touch_artifact(otmp,ukiller))
+                                            continue;
+					if (!can_carry(ukiller,otmp))
+                                            continue;
+                                        if (otmp == uball || otmp == uchain)
+                                            continue;
 					obj_extract_self(otmp);
 					mpickobj(ukiller,otmp);
 				}

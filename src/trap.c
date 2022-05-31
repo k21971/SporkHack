@@ -281,7 +281,7 @@ register int x, y, typ;
 		    int dist;
 		    int lx, ly;
 		    int ok = 0;
-		    for (d = 0; ((d < 8) && !ok); d++)
+		    for (d = 0; ((d < 8) && !ok); d++) {
 			for (dist = 1; ((dist < 8) && !ok); dist++) {
 			    lx = x;
 			    ly = y;
@@ -315,6 +315,7 @@ register int x, y, typ;
 				ok = 1;
 			    }
 			}
+                    }
 		}
 		break;
 	    case ROLLING_BOULDER_TRAP:	/* boulder will roll towards trigger */
@@ -1259,6 +1260,7 @@ glovecheck:		(void) rust_dmg(uarmg, "gauntlets", 1, TRUE, &youmonst);
 		if (thick_skinned(youmonst.data)) {
 			pline("But it breaks off against your body.");
 			deltrap(trap);
+                        newsym(u.ux, u.uy);
 		} else if (Levitation) {
 			pline("The spear isn't long enough to reach you.");
 		} else if (unsolid(youmonst.data)) {
@@ -2337,6 +2339,7 @@ glovecheck:		    target = which_armor(mtmp, W_ARMG);
 					pline("But it breaks off against %s.",mon_nam(mtmp));
 				}
 				deltrap(trap);
+                                newsym(mtmp->mx, mtmp->my);
 			} else if (unsolid(mptr)) {
 				if (in_sight) {
 					pline("It passes right through %s!",mon_nam(mtmp));
@@ -2371,9 +2374,11 @@ glovecheck:		    target = which_armor(mtmp, W_ARMG);
 			 trap->launch.x,trap->launch.y,
 			 sgn(trap->tx - trap->launch.x),sgn(trap->ty - trap->launch.y));
 		    trap->once = 1;
+                    if (DEADMONSTER(mtmp))
+                        trapkilled = TRUE;
 		} else {
 		    deltrap(trap);
-		    newsym(u.ux,u.uy);
+		    newsym(mtmp->mx, mtmp->my);
 		}
 		break;
 		default:
