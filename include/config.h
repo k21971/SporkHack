@@ -144,10 +144,10 @@
 
 #ifndef WIZARD		/* allow for compile-time or Makefile changes */
 # ifndef KR1ED
-#  define WIZARD  "derek" /* the person allowed to use the -D option */
+#  define WIZARD  "wizard" /* the person allowed to use the -D option */
 # else
 #  define WIZARD
-#  define WIZARD_NAME "derek"
+#  define WIZARD_NAME "wizard"
 # endif
 #endif
 
@@ -157,6 +157,7 @@
 #define PANICLOG "paniclog"	/* log of panic and impossible events */
 #define DUMP_LOG				 /* turn on dumping */
 #define DUMP_FN "/dgldir/userdata/%N/%n/sporkhack/dumplog/%t.sp.txt"
+/*#define DUMP_FN "/tmp/%t.sp.txt"*/
 #define DUMPMSGS 30
 
 #define SERVER_ADMIN_MSG "admin_msg"
@@ -212,6 +213,7 @@
  */
 # ifndef HACKDIR
 #  define HACKDIR "/sporkhack-0.6.5/var"
+/*#  define HACKDIR "/usr/games/lib/sporkhackdir/var"*/
 # endif
 
 /*
