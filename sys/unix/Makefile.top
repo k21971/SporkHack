@@ -41,7 +41,7 @@ DIRPERM  = 0755
 GAMEDIR  = $(PREFIX)/sporkhack-0.6.5
 #GAMEDIR  = $(PREFIX)/games/lib/$(GAME)dir
 VARDIR  = $(GAMEDIR)/var
-#SHELLDIR = /tmp
+SHELLDIR = /tmp
 
 # per discussion in Install.X11 and Install.Qt
 VARDATND =
