@@ -444,7 +444,7 @@ panic VA_DECL(const char *, str)
 # if defined(NOTIFY_NETHACK_BUGS)
 	if (!wizard)
 	    raw_printf("Report the following error to \"%s\""
-				 ", and it may be possible to rebuild.", "spork@sporkhack.com");
+				 ", and it may be possible to rebuild.", "admin@hardfought.org");
 	else if (program_state.something_worth_saving)
 	    raw_print("\nError save file being written.\n");
 # else
