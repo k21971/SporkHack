@@ -24,6 +24,14 @@
 #	'SysBe'		-- BeOS
 SYSTEM = Sysunix
 
+# Game's view of where HACKDIR is
+# This needs to change when save compat is broken and install-to-chroot
+# script needs to match.
+#
+DIR = /sporkhack-0.6.5
+#DIR = /usr/games/lib/sporkhackdir
+VAR = $(DIR)/var
+
 #
 # Make sure that your bourne shell is specified here, as you have to spawn
 # some of the commands (eg. depend) in bourne shell for them to work.
