@@ -212,7 +212,7 @@
  * otherwise it will be the current directory.
  */
 # ifndef HACKDIR
-#  define HACKDIR "/sporkhack-0.6.5/var"
+#  define HACKDIR "/sporkhack-0.7.0/var"
 /*#  define HACKDIR "/usr/games/lib/sporkhackdir/var"*/
 # endif
 

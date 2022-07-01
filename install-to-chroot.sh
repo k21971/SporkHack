@@ -17,9 +17,8 @@ USRGRP="games:games"
 SP_GIT="/home/build/SporkHack"
 # HACKDIR from include/config.h; aka nethack subdir inside chroot
 # Make a new one each time save compat is broken
-SPSUBDIR="sporkhack-0.6.5"
+SPSUBDIR="sporkhack-0.7.0"
 #for combining xlogfile, etc on minor version bump
-#SP_LOG_SYMLINK_TARGET="/sporkhack-0.6.5/var"
 # END OF CONFIG
 ##############################################################################
 
@@ -44,8 +43,8 @@ set -e
 umask 022
 
 echo "Creating inprogress and userdata directories"
-mkdir -p "$NAO_CHROOT/dgldir/inprogress-sp065"
-chown "$USRGRP" "$NAO_CHROOT/dgldir/inprogress-sp065"
+mkdir -p "$NAO_CHROOT/dgldir/inprogress-sp070"
+chown "$USRGRP" "$NAO_CHROOT/dgldir/inprogress-sp070"
 mkdir -p "$NAO_CHROOT/dgldir/extrainfo-sp"
 chown "$USRGRP" "$NAO_CHROOT/dgldir/extrainfo-sp"
 
@@ -91,6 +90,8 @@ if [ -z "$SP_LOG_SYMLINK_TARGET" -o ! -e "$NAO_CHROOT$SP_LOG_SYMLINK_TARGET" -o 
   chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/livelog"
   touch "$NAO_CHROOT/$SPSUBDIR/var/perm"
   chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/perm"
+  touch "$NAO_CHROOT/$SPSUBDIR/var/wishtracker"
+  chown -R "$USRGRP" "$NAO_CHROOT/$SPSUBDIR/var/wishtracker"
 else
   if [ -f $NAO_CHROOT/$SPSUBDIR/var/xlogfile ]; then
     errorexit "$NAO_CHROOT/$SPSUBDIR/var/xlogfile exists as a regular file. Proceeding will casuse data loss."
@@ -100,6 +101,7 @@ else
   ln -fs $SP_LOG_SYMLINK_TARGET/record $NAO_CHROOT/$SPSUBDIR/var
   ln -fs $SP_LOG_SYMLINK_TARGET/logfile $NAO_CHROOT/$SPSUBDIR/var
   ln -fs $SP_LOG_SYMLINK_TARGET/perm $NAO_CHROOT/$SPSUBDIR/var
+  ln -fs $SP_LOG_SYMLINK_TARGET/wishtracker $NAO_CHROOT/$SPSUBDIR/var
 fi
 
 RECOVER="$SPORKHACK_GIT/util/recover"

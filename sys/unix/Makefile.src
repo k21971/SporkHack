@@ -28,7 +28,7 @@ SYSTEM = Sysunix
 # This needs to change when save compat is broken and install-to-chroot
 # script needs to match.
 #
-DIR = /sporkhack-0.6.5
+DIR = /sporkhack-0.7.0
 #DIR = /usr/games/lib/sporkhackdir
 VAR = $(DIR)/var
 
