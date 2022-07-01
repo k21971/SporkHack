@@ -919,6 +919,9 @@ E int NDECL(doforce);
 E boolean FDECL(boxlock, (struct obj *,struct obj *));
 E boolean FDECL(doorlock, (struct obj *,int,int));
 E int NDECL(doopen);
+#ifdef AUTO_OPEN
+E int FDECL(doopen_indir, (int,int));
+#endif
 E int NDECL(doclose);
 
 #ifdef MAC

@@ -720,7 +720,7 @@ int gr_set_flag;
 #endif
 #ifdef CURSES_GRAPHICS
     case CURS_GRAPHICS:
-            assign_graphics((glyph_t *)0, 0, MAXPCHARS, 0);
+            assign_graphics((uchar *)0, 0, MAXPCHARS, 0);
         iflags.cursesgraphics = TRUE;
             iflags.IBMgraphics = FALSE;
             iflags.DECgraphics = FALSE;

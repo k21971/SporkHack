@@ -4,6 +4,10 @@
 
 #include "hack.h"
 
+#ifdef TTY_GRAPHICS
+#include "wintty.h"
+#endif
+
 #ifdef OVL0
 extern const char *hu_stat[];	/* defined in eat.c */
 
@@ -87,7 +91,7 @@ struct color_option color_option;
 {
 	int i;
 	if (color_option.color != NO_COLOR)
-		term_end_color(color_option.color);
+		term_end_color();
 	for (i = 0; (1 << i) <= color_option.attr_bits; ++i)
 		if (i != ATR_NONE && color_option.attr_bits & (1 << i))
 			term_end_attr(i);
@@ -281,9 +285,9 @@ bot1()
 			mbot[k] += 'A' - 'a';
 		    k++;
 		}
-		Sprintf(nb = eos(nb), mbot);
+		Sprintf(nb = eos(nb), "%s", mbot);
 	} else
-		Sprintf(nb = eos(nb), rank());
+		Sprintf(nb = eos(nb), "%s", rank());
 
 	Sprintf(nb = eos(nb),"  ");
 	i = mrank_sz + 15;

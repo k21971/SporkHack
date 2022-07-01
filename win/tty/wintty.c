@@ -40,6 +40,10 @@ extern void msmsg(const char *,...);
 
 extern char mapped_menu_cmds[]; /* from options.c */
 
+#ifdef TEXTCOLOR
+extern void term_start_bgcolor (int);
+#endif
+
 /* Interface definition, for windows.c */
 struct window_procs tty_procs = {
     "tty",

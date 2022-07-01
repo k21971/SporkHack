@@ -661,7 +661,7 @@ ck_server_admin_msg()
           pline("The voice of %s booms through the caverns:", curline);
           shown_name = TRUE;
         }
-        verbalize(msg);
+        verbalize("%s", msg);
       }
       ost.st_mtime = nst.st_mtime;
       fclose(mb);

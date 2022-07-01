@@ -833,7 +833,7 @@ boolean ghostly;
 	    else
 		Sprintf(trickbuf, "This is level %d, not %d!", dlvl, lev);
 #ifdef WIZARD
-	    if (wizard) pline(trickbuf);
+	    if (wizard) pline("%s", trickbuf);
 #endif
 	    trickery(trickbuf);
 	}
@@ -843,7 +843,7 @@ boolean ghostly;
 		short	i, j;
 		uchar	len;
 		struct rm r;
-		
+
 #if defined(MAC)
 		/* Suppress warning about used before set */
 		(void) memset((genericptr_t) &r, 0, sizeof(r));

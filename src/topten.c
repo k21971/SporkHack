@@ -278,7 +278,7 @@ struct toptenentry *tt;
 
   /* Log all of the data found in the regular logfile */
   (void)fprintf(rfile,
-                "version=%d.%d.%d"
+                "version=%i.%i.%i"
                 SEP "points=%ld"
                 SEP "deathdnum=%d"
                 SEP "deathlev=%d"
@@ -286,8 +286,8 @@ struct toptenentry *tt;
                 SEP "hp=%d"
                 SEP "maxhp=%d"
                 SEP "deaths=%d"
-                SEP "deathdate=%d"
-                SEP "birthdate=%d"
+                SEP "deathdate=%ld"
+                SEP "birthdate=%ld"
                 SEP "uid=%d",
                 tt->ver_major, tt->ver_minor, tt->patchlevel,
                 tt->points, tt->deathdnum, tt->deathlev,

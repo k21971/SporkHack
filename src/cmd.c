@@ -503,6 +503,7 @@ enter_explore_mode()
 }
 
 #ifdef WIZARD
+int flip_level();
 
 int
 wiz_fliplevel()
@@ -731,7 +732,7 @@ wiz_level_change()
     else ret = sscanf(buf, "%d", &newlevel);
 
     if (ret != 1) {
-	pline(Never_mind);
+	pline("%s", Never_mind);
 	return 0;
     }
     if (newlevel == u.ulevel) {
@@ -1215,7 +1216,7 @@ int final;	/* 0 => still in progress; 1 => over, survived; 2 => dead */
 #ifdef WIZARD
 		if (wizard)
 			if (ESlow) Sprintf(eos(buf)," (from an item)");
-			else Sprintf(eos(buf)," (%d turns)",HSlow);
+			else Sprintf(eos(buf)," (%ld turns)",HSlow);
 #endif
 		you_are(buf);
 	}
@@ -1224,7 +1225,7 @@ int final;	/* 0 => still in progress; 1 => over, survived; 2 => dead */
 #ifdef WIZARD
 		if (wizard)
 			if (EReflecting) Sprintf(eos(buf)," (from an item)");
-			else Sprintf(eos(buf)," (%d turns)",HReflecting);
+			else Sprintf(eos(buf)," (%ld turns)",HReflecting);
 #endif
 		you_have(buf);
 	}
@@ -2710,7 +2711,7 @@ coord *cc;
 {
 	xchar new_x, new_y;
 	if (!getdir(prompt)) {
-		pline(Never_mind);
+		pline("%s", Never_mind);
 		return 0;
 	}
 	new_x = x + u.dx;
@@ -2719,7 +2720,7 @@ coord *cc;
 		cc->x = new_x;
 		cc->y = new_y;
 	} else {
-		if (emsg) pline(emsg);
+		if (emsg) pline("%s", emsg);
 		return 0;
 	}
 	return 1;
@@ -2998,7 +2999,7 @@ parse()
 		    if (multi > 9) {
 			clear_nhwindow(WIN_MESSAGE);
 			Sprintf(in_line, "Count: %d", multi);
-			pline(in_line);
+			pline("%s", in_line);
 			mark_synch();
 		    }
 		    last_multi = multi;

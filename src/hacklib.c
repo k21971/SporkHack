@@ -6,6 +6,7 @@
 /* We could include only config.h, except for the overlay definitions... */
 #include "hack.h"
 #ifdef UNIX
+#include <ctype.h>
 #include <sys/times.h>
 #endif
 /*=

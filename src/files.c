@@ -12,6 +12,9 @@
 #endif
 
 #include <ctype.h>
+#ifdef UNIX
+#include <sys/stat.h> /* whereis-file chmod() */
+#endif
 
 #if (!defined(MAC) && !defined(O_WRONLY) && !defined(AZTEC_C)) || defined(USE_FCNTL)
 #include <fcntl.h>
@@ -145,6 +148,7 @@ extern char *sounddir;
 #endif
 
 extern int n_dgns;		/* from dungeon.c */
+extern boolean parse_status_color_options(char *);
 
 STATIC_DCL char *FDECL(set_bonesfile_name, (char *,d_level*));
 STATIC_DCL char *NDECL(set_bonestemp_name);
@@ -624,9 +628,9 @@ char* wishstring;
 
 	fp = fopen_datafile(wish_tracker_file,"a+",LEVELPREFIX);
 	if (fp) {
-		Sprintf(bigbuf,"%s wished for %s (%d%s wish, T:%d)\n",
+		Sprintf(bigbuf,"%s wished for %s (%ld%s wish, T:%ld)\n",
 				plname,wishstring,u.uconduct.wishes,
-				u.uconduct.wishes == 1 ? "st" : u.uconduct.wishes == 2 ? "nd" : 
+				u.uconduct.wishes == 1 ? "st" : u.uconduct.wishes == 2 ? "nd" :
 				u.uconduct.wishes == 3 ? "rd" : "th",moves);
 		fwrite(bigbuf,strlen(bigbuf),1,fp);
 		fclose(fp);
@@ -672,7 +676,7 @@ touch_whereis()
 #else
 	Sprintf(whereis_file,"%s.whereis",plname);
 #endif
-	Sprintf(whereis_work,"depth=%d:dnum=%d:hp=%d:maxhp=%d:turns=%d:role=%s:race=%s:gender=%s:align=%s:amulet=%d:playing=1\n",
+	Sprintf(whereis_work,"depth=%d:dnum=%d:hp=%d:maxhp=%d:turns=%ld:role=%s:race=%s:gender=%s:align=%s:amulet=%d:playing=1\n",
 			depth(&u.uz), u.uz.dnum, u.uhp, u.uhpmax, moves,
 			urole.filecode,urace.filecode,u.mfemale ? "Fem" : "Mal",
                         (u.ualign.type == A_CHAOTIC ? "Cha" : (u.ualign.type == A_NEUTRAL ? "Neu" : "Law")),
@@ -701,7 +705,7 @@ delete_whereis()
 #else
 	Sprintf(whereis_file,"%s.whereis",plname);
 #endif
-	Sprintf(whereis_work,"depth=%d:dnum=%d:hp=%d:maxhp=%d:turns=%d:role=%s:race=%s:gender=%s:align=%s:amulet=%d:playing=0\n",
+	Sprintf(whereis_work,"depth=%d:dnum=%d:hp=%d:maxhp=%d:turns=%ld:role=%s:race=%s:gender=%s:align=%s:amulet=%d:playing=0\n",
 			depth(&u.uz), u.uz.dnum, u.uhp, u.uhpmax, moves,
 			urole.name.m,urace.adj,u.mfemale ? "Fem" : "Mal",
                         (u.ualign.type == A_CHAOTIC ? "Cha" : (u.ualign.type == A_NEUTRAL ? "Neu" : "Law")),

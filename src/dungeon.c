@@ -6,6 +6,7 @@
 #include "dgn_file.h"
 #include "dlb.h"
 #include "display.h"
+#include <ctype.h>
 
 #ifdef OVL1
 
@@ -716,7 +717,7 @@ init_dungeons()		/* initialize the "dungeon" structs */
 	    interject_assistance(1, INTERJECT_PANIC, (genericptr_t)tbuf,
 				 (genericptr_t)fqn_prefix[DATAPREFIX]);
 #endif
-	    panic(tbuf);
+	    panic("%s", tbuf);
 	}
 
 	/* validate the data's version against the program's version */
@@ -2284,7 +2285,7 @@ boolean printdun;
 	if (mptr->lev.dnum == quest_dnum || mptr->lev.dnum == knox_level.dnum)
 		depthstart = 1;
 	else
-		depthstart = dungeons[mptr->lev.dnum].depth_start;  
+		depthstart = dungeons[mptr->lev.dnum].depth_start;
 
 	if (printdun) {
 		/* Sokoban lies about dunlev_ureached and we should
@@ -2294,9 +2295,9 @@ boolean printdun;
 			mptr->lev.dnum == sokoban_dnum || In_endgame(&mptr->lev))
 			Sprintf(buf, "%s:", dungeons[mptr->lev.dnum].dname);
 		else
-			Sprintf(buf, "%s: levels %d to %d", 
+			Sprintf(buf, "%s: levels %d to %d",
 				dungeons[mptr->lev.dnum].dname,
-				depthstart, depthstart + 
+				depthstart, depthstart +
 				dungeons[mptr->lev.dnum].dunlev_ureached - 1);
 		putstr(win, ATR_INVERSE, buf);
 	}
@@ -2316,7 +2317,7 @@ boolean printdun;
 		Sprintf(buf, TAB "Plane %i:", -i);
 	else
 		Sprintf(buf, TAB "Level %d:", i);
-	
+
 #ifdef WIZARD
 	/* wizmode prints out proto dungeon names for clarity */
 	if (wizard) {
@@ -2330,7 +2331,7 @@ boolean printdun;
 		Sprintf(eos(buf), " (%s)", mptr->custom);
 
 	/* print out glyph or something more interesting? */
-	Sprintf(eos(buf), "%s", on_level(&u.uz, &mptr->lev) ? 
+	Sprintf(eos(buf), "%s", on_level(&u.uz, &mptr->lev) ?
 		" <- You are here" : "");
 	putstr(win, ATR_BOLD, buf);
 
@@ -2338,7 +2339,7 @@ boolean printdun;
 
 	if (INTEREST(mptr->feat)) {
 		buf[0] = 0;
-		
+
 		i = 0; /* interest counter */
 
 		/* List interests in an order vaguely corresponding to
@@ -2347,7 +2348,7 @@ boolean printdun;
 		if (mptr->feat.nshop > 1)
 			ADDNTOBUF("shop", mptr->feat.nshop)
 		else if (mptr->feat.nshop == 1)
-			Sprintf(eos(buf), "%s%s", COMMA, 
+			Sprintf(eos(buf), "%s%s", COMMA,
 				an(shop_string(mptr->feat.shoptype)));
 
 		/* Temples + non-temple altars get munged into just "altars" */
@@ -2379,7 +2380,7 @@ boolean printdun;
 
 	/* print out branches */
 	if (mptr->br) {
-		Sprintf(buf, PREFIX "%s to %s", br_string2(mptr->br), 
+		Sprintf(buf, PREFIX "%s to %s", br_string2(mptr->br),
 			dungeons[mptr->br->end2.dnum].dname);
 
 		/* since mapseen objects are printed out in increasing order

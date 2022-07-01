@@ -1044,6 +1044,7 @@ chk:
 
 boolean
 check_room_space(x1,y1,x2,y2)
+xchar x1,x2,y1,y2;
 {
     int x,y;
     for (x = x1; x <= x2; x++)
@@ -5470,7 +5471,7 @@ sp_lev *lvl;
 			}
 			break;
 		    default:
-			impossible("spo_convert_type: cannot convert to type %i", OV_i(a));
+			impossible("spo_convert_type: cannot convert to type %li", OV_i(a));
 			break;
 		    }
 		    break;
@@ -5488,12 +5489,12 @@ sp_lev *lvl;
 			}
 			break;
 		    default:
-			impossible("spo_convert_type: cannot convert to type %i", OV_i(a));
+			impossible("spo_convert_type: cannot convert to type %li", OV_i(a));
 			break;
 		    }
 		    break;
 		default:
-		    impossible("spo_convert_type: cannot convert from type %i", OV_i(a));
+		    impossible("spo_convert_type: cannot convert from type %li", OV_i(a));
 		    break;
 		}
 		opvar_free(a);

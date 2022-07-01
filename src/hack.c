@@ -19,6 +19,10 @@ STATIC_DCL void FDECL(move_update, (BOOLEAN_P));
 
 static boolean door_opened;	/* set to true if door was opened during test_move */
 
+#ifdef AUTO_OPEN
+extern int doopen_indir(int, int);
+#endif
+
 #define IS_SHOP(x)	(rooms[x].rtype >= SHOPBASE)
 
 #ifdef OVL2
@@ -433,7 +437,7 @@ still_chewing(x,y)
 
     unblock_point(x, y);	/* vision */
     newsym(x, y);
-    if (digtxt) You(digtxt);	/* after newsym */
+    if (digtxt) You("%s", digtxt);	/* after newsym */
 	 if (getcoal) get_coal();
     if (dmgtxt) pay_for_damage(dmgtxt, FALSE);
     (void) memset((genericptr_t)&digging, 0, sizeof digging);
@@ -2122,7 +2126,7 @@ const char *msg_override;
 	(void) memset(multi_txt, 0, BUFSZ);
 	if (msg_override) nomovemsg = msg_override;
 	else if (!nomovemsg) nomovemsg = You_can_move_again;
-	if (*nomovemsg) pline(nomovemsg);
+	if (*nomovemsg) pline("%s", nomovemsg);
 	nomovemsg = 0;
 	u.usleep = 0;
 	if (afternmv) (*afternmv)();
@@ -2375,7 +2379,7 @@ const char *str;
 {
     if(near_capacity() >= EXT_ENCUMBER) {
 	if(str)
-	    pline(str);
+	    pline("%s", str);
 	else
 	    You_cant("do that while carrying so much stuff.");
 	return 1;

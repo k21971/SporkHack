@@ -351,12 +351,12 @@ include_push(fname)
 const char *fname;
 {
   if (doing_included_file >= 5)
-    yyerror("Too deep includes");
+    perror("Too deep includes");
   else {
     FILE *fin;
     fin = fopen(fname, "r");
     if (!fin) {
-       yyerror("Cannot open file for including.");
+       perror("Cannot open file for including.");
     } else {
        include_stack[doing_included_file] = YY_CURRENT_BUFFER;
        include_line[doing_included_file] = line_number;

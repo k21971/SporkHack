@@ -491,9 +491,10 @@ curses_init_nhcolors()
  */
 void
 curses_charsel_toggle_color(c,oo)
+int c,oo;
 {
     curses_toggle_color_attr(mapwin,c,NONE,oo);
-}    
+}
 
 void
 curses_choose_character()
