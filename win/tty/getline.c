@@ -52,7 +52,7 @@ getlin_hook_proc hook;
 	struct WinDesc *cw = wins[WIN_MESSAGE];
 	boolean doprev = 0;
 
-	bufp = eos(obufp);
+	*bufp = '\0';
 
 	if(ttyDisplay->toplin == 1 && !(cw->flags & WIN_STOP)) more();
 	cw->flags &= ~WIN_STOP;

@@ -156,8 +156,8 @@
 #define NEWS "news"		/* the file containing the latest hack news */
 #define PANICLOG "paniclog"	/* log of panic and impossible events */
 #define DUMP_LOG				 /* turn on dumping */
-#define DUMP_FN "/dgldir/userdata/%N/%n/sporkhack/dumplog/%t.sp.txt"
-/*#define DUMP_FN "/tmp/%t.sp.txt"*/
+/*#define DUMP_FN "/dgldir/userdata/%N/%n/sporkhack/dumplog/%t.sp.txt"*/
+#define DUMP_FN "/tmp/%t.sp.txt"
 #define DUMPMSGS 30
 
 #define SERVER_ADMIN_MSG "admin_msg"
@@ -212,8 +212,8 @@
  * otherwise it will be the current directory.
  */
 # ifndef HACKDIR
-#  define HACKDIR "/sporkhack-0.7.0/var"
-/*#  define HACKDIR "/usr/games/lib/sporkhackdir/var"*/
+/*#  define HACKDIR "/sporkhack-0.7.0/var"*/
+#  define HACKDIR "/usr/games/lib/sporkhackdir/var"
 # endif
 
 /*

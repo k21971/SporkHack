@@ -16,8 +16,8 @@ export VCS_DESCRIPTION = git $(shell git rev-parse --short HEAD)
 # MAKE = make
 
 # make NetHack
-PREFIX	 = /opt/nethack/chroot
-#PREFIX   = /usr
+#PREFIX	 = /opt/nethack/chroot
+PREFIX   = /usr
 GAME     = sporkhack
 # GAME     = nethack.prg
 GAMEUID  = games
@@ -38,8 +38,8 @@ DIRPERM  = 0755
 # therefore there should not be anything in GAMEDIR that you want to keep
 # (if there is, you'll have to do the installation by hand or modify the
 # instructions)
-GAMEDIR  = $(PREFIX)/sporkhack-0.7.0
-#GAMEDIR  = $(PREFIX)/games/lib/$(GAME)dir
+#GAMEDIR  = $(PREFIX)/sporkhack-0.7.0
+GAMEDIR  = $(PREFIX)/games/lib/$(GAME)dir
 VARDIR  = $(GAMEDIR)/var
 SHELLDIR = /tmp
 

@@ -1948,7 +1948,7 @@ int final;
 	    if (!u.uconduct.wisharti)
 		dump("", "  You did not wish for any artifacts");
 	}
-	
+
 	if (!u.uconduct.elbereths)
 	    dump("", "  You never engraved Elbereth");
 	else {
@@ -1956,7 +1956,7 @@ int final;
 		    u.uconduct.elbereths, plur(u.uconduct.elbereths));
 	    dump("  You ", buf);
 	}
-	
+
 	dump("", "");
 }
 #endif /* DUMP_LOG */
@@ -2132,10 +2132,10 @@ struct ext_func_tab extcmdlist[] = {
 	{(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},
+	{(char *)0, (char *)0, donull, TRUE},
 #ifdef DEBUG_MIGRATING_MONS
 	{(char *)0, (char *)0, donull, TRUE},
 #endif
-	{(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},

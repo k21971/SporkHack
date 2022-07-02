@@ -1841,13 +1841,13 @@ donamelevel()
 		mptr->custom = (char *)0;
 		mptr->custom_lth = 0;
 	}
-	
+
 	if (*nbuf) {
 		mptr->custom = (char *) alloc(sizeof(char) * len);
 		mptr->custom_lth = len;
 		strcpy(mptr->custom, nbuf);
 	}
-   
+
 	return 0;
 }
 
@@ -1872,7 +1872,7 @@ int ledger_no;
 	mapseen *mptr;
 
 	for (mptr = mapseenchn; mptr; mptr = mptr->next)
-		if (dungeons[mptr->lev.dnum].ledger_start + 
+		if (dungeons[mptr->lev.dnum].ledger_start +
 			mptr->lev.dlevel == ledger_no) break;
 
 	/* if not found, then nothing to forget */
