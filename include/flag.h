@@ -300,16 +300,14 @@ struct instance_flags {
 	boolean  showobjsym;	/* show object class symbol in menus where available */
 	boolean  travelcmd;	/* allow travel command */
 	boolean  show_dgn_name; /* show dungeon names instead of Dlvl: on bottom line
-										 probably only good for people taking advantage of 
+										 probably only good for people taking advantage of
 										 the wide terminals allowed in Spork */
     int boom_flight_path; /* boomerang flight path */
 
 	int	 runmode;	/* update screen display during run moves */
-#ifdef AUTOPICKUP_EXCEPTIONS
 	struct autopickup_exception *autopickup_exceptions[2];
 #define AP_LEAVE 0
 #define AP_GRAB	 1
-#endif
 #ifdef WIN32CON
 #define MAX_ALTKEYHANDLER 25
 	char	 altkeyhandler[MAX_ALTKEYHANDLER];

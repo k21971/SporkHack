@@ -397,29 +397,27 @@ E char *fqn_prefix[PREFIX_COUNT];
 E char *fqn_prefix_names[PREFIX_COUNT];
 #endif
 
-#ifdef AUTOPICKUP_EXCEPTIONS
 struct autopickup_exception {
 	char *pattern;
 	boolean grab;
 	struct autopickup_exception *next;
 };
-#endif /* AUTOPICKUP_EXCEPTIONS */
 
 #ifdef RECORD_ACHIEVE
 struct u_achieve {
-        Bitfield(get_bell,1);        /* You have obtained the bell of 
+        Bitfield(get_bell,1);        /* You have obtained the bell of
                                       * opening */
         Bitfield(get_candelabrum,1); /* You have obtained the candelabrum */
-        Bitfield(get_book,1);        /* You have obtained the book of 
+        Bitfield(get_book,1);        /* You have obtained the book of
                                       * the dead */
-        Bitfield(enter_gehennom,1);  /* Entered Gehennom (including the 
+        Bitfield(enter_gehennom,1);  /* Entered Gehennom (including the
                                       * Valley) by any means */
         Bitfield(perform_invocation,1); /* You have performed the invocation
                                          * ritual */
         Bitfield(get_amulet,1);      /* You have obtained the amulet
                                       * of Yendor */
         Bitfield(ascended,1);        /* You ascended to demigod[dess]hood.
-                                      * Not quite the same as 
+                                      * Not quite the same as
                                       * u.uevent.ascended. */
         Bitfield(get_luckstone,1);   /* You obtained the luckstone at the
                                       * end of the mines. */

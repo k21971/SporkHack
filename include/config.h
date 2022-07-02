@@ -398,7 +398,6 @@ typedef long glyph_t;
 
 #define STATUS_COLORS
 #define GOLDOBJ /* Gold is kept on obj chains - Helge Hafting */
-#define AUTOPICKUP_EXCEPTIONS /* exceptions to autopickup */
 #define WHEREIS_FILE "%n.whereis" /* Write out player's current location to player.whereis */
 #define WISH_TRACKER /* Write all wishes to a tracking file */
 

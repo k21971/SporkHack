@@ -640,9 +640,7 @@ static const char *build_opts[] = {
 #ifdef ANSI_DEFAULT
 		"ANSI default terminal",
 #endif
-#ifdef AUTOPICKUP_EXCEPTIONS
 		"autopickup_exceptions",
-#endif
 #ifdef AUTO_OPEN
 		"auto open doors",
 #endif

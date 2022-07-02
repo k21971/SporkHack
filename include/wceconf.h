@@ -12,7 +12,7 @@
 #include <windows.h>
 
 /* Detect the targe device */
-#if defined(WIN32_PLATFORM_PSPC) 
+#if defined(WIN32_PLATFORM_PSPC)
 #	if _WIN32_WCE >= 300
 #		define WIN_CE_POCKETPC
 #	else
@@ -42,8 +42,6 @@
 #define NOTSTDC		/* no strerror() */
 
 #define USER_SOUNDS
-
-#define AUTOPICKUP_EXCEPTIONS
 
 /*
  * -----------------------------------------------------------------
