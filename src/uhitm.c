@@ -4,7 +4,7 @@
 
 #include "hack.h"
 
-STATIC_DCL boolean FDECL(known_hitum, (struct monst *,int *,struct attack *,int));
+STATIC_DCL boolean FDECL(known_hitum, (struct monst *,struct obj *,int *,struct attack *,int));
 STATIC_DCL void FDECL(steal_it, (struct monst *, struct attack *));
 STATIC_DCL boolean FDECL(hitum, (struct monst *,int,struct attack *));
 STATIC_DCL boolean FDECL(hmon_hitmon, (struct monst *,struct obj *,int,int));
@@ -435,8 +435,9 @@ atk_done:
 }
 
 STATIC_OVL boolean
-known_hitum(mon, mhit, uattk, dieroll)	/* returns TRUE if monster still lives */
+known_hitum(mon, weapon, mhit, uattk, dieroll)	/* returns TRUE if monster still lives */
 register struct monst *mon;
+struct obj *weapon;
 register int *mhit;
 struct attack *uattk;
 int dieroll;
@@ -454,19 +455,16 @@ int dieroll;
 	} else {
 	    int oldhp = mon->mhp,
 		x = u.ux + u.dx, y = u.uy + u.dy;
+	    long oldweaphit = u.uconduct.weaphit;
 
 	    /* KMH, conduct */
-	    if (uwep && (uwep->oclass == WEAPON_CLASS || is_weptool(uwep)))
+	    if (weapon && (weapon->oclass == WEAPON_CLASS || is_weptool(weapon)))
 		u.uconduct.weaphit++;
 
 	    /* we hit the monster; be careful: it might die or
 	       be knocked into a different location */
 	    notonhead = (mon->mx != x || mon->my != y);
-	    malive = hmon(mon, uwep, 0, dieroll);
-	    /* this assumes that Stormbringer was uwep not uswapwep */ 
-	    if (malive && u.twoweap && !override_confirmation &&
-		    m_at(x, y) == mon)
-		malive = hmon(mon, uswapwep, 0, dieroll);
+	    malive = hmon(mon, weapon, 0, dieroll);
 	    if (malive) {
 		/* monster still alive */
 		if(!rn2(25) && mon->mhp < mon->mhpmax/2
@@ -484,9 +482,7 @@ int dieroll;
 		if (mon->mhp == oldhp) {
 		    *mhit = 0;
 		    /* a miss does not break conduct */
-		    if (uwep &&
-			(uwep->oclass == WEAPON_CLASS || is_weptool(uwep)))
-			--u.uconduct.weaphit;
+		    u.uconduct.weaphit = oldweaphit;
 		}
 		if (mon->wormno && *mhit)
 		    cutworm(mon, x, y, uwep);
@@ -504,10 +500,23 @@ struct attack *uattk;
 	boolean malive;
         int dieroll = rnd(20);
 	int mhit = (tmp > dieroll || u.uswallow);
+	int x = u.ux + u.dx, y = u.uy + u.dy;
 
 	if(tmp > dieroll) exercise(A_DEX, TRUE);
-	malive = known_hitum(mon, &mhit, uattk, dieroll);
+	malive = known_hitum(mon, uwep, &mhit, uattk, dieroll);
 	(void) passive(mon, mhit, malive, AT_WEAP);
+
+        /* second attack for two-weapon combat; won't occur if Stormbringer
+           overrode confirmation (assumes Stormbringer is primary weapon)
+           or if the monster was killed or knocked to different location */
+        if (u.twoweap && !override_confirmation && malive && m_at(x, y) == mon) {
+            dieroll = rnd(20);
+            mhit = (tmp > dieroll || u.uswallow);
+            malive = known_hitum(mon, uswapwep, &mhit, uattk, dieroll);
+            /* second passive counter-attack only occurs if second attack hits */
+            if (mhit)
+                (void) passive(mon, mhit, malive, AT_WEAP);
+        }
 	return(malive);
 }
 
@@ -2088,6 +2097,7 @@ register struct monst *mon;
 register int tmp;
 {
 	struct attack *mattk, alt_attk;
+	struct obj *weapon;
 	int	i, sum[NATTK], hittmp = 0;
 	int	nsum = 0;
 	int	dhit = 0;
@@ -2116,7 +2126,7 @@ use_weapon:
 			/* KMH -- Don't accumulate to-hit bonuses */
 			if (uwep) tmp -= hittmp;
 			/* Enemy dead, before any special abilities used */
-			if (!known_hitum(mon,&dhit,mattk,dieroll)) {
+			if (!known_hitum(mon,weapon,&dhit,mattk,dieroll)) {
 			    sum[i] = 2;
 			    break;
 			} else sum[i] = dhit;
