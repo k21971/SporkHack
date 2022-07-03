@@ -502,6 +502,27 @@ bot2()
 	    Strcat(nb = eos(nb), " Blind");
 	    x += strlen(nb);
 	}
+        if(Levitation) {
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+            add_colored_text("Lev", x);
+#endif
+            Strcat(nb = eos(nb), " Lev");
+            x += strlen(nb);
+        }
+        if(Flying) {
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+            add_colored_text("Fly", x);
+#endif
+            Strcat(nb = eos(nb), " Fly");
+            x += strlen(nb);
+        }
+        if(u.usteed) {
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+            add_colored_text("Ride", x);
+#endif
+            Strcat(nb = eos(nb), " Ride");
+            x += strlen(nb);
+        }
 	if(Stunned) {
 #if defined(STATUS_COLORS) && defined(TEXTCOLOR)
 	    add_colored_text("Stun", x);
@@ -509,6 +530,13 @@ bot2()
 	    Strcat(nb = eos(nb), " Stun");
 	    x += strlen(nb);
 	}
+	if(Hallucination) {
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	    add_colored_text("Hallu", x);
+#endif
+	    Strcat(nb = eos(nb), " Hallu");
+            x += strlen(nb);
+        }
 	if(Slimed) {
 #if defined(STATUS_COLORS) && defined(TEXTCOLOR)
 	    add_colored_text("Slime", x);
@@ -516,6 +544,20 @@ bot2()
 	    Strcat(nb = eos(nb), " Slime");
 	    x += strlen(nb);
 	}
+        if(Stoned) {
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+            add_colored_text("Stone", x);
+#endif
+            Strcat(nb = eos(nb), " Stone");
+            x += strlen(nb);
+        }
+        if(Strangled) {
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+            add_colored_text("Strngl", x);
+#endif
+            Strcat(nb = eos(nb), " Strngl");
+            x += strlen(nb);
+        }
 	if(cap > UNENCUMBERED) {
 #if defined(STATUS_COLORS) && defined(TEXTCOLOR)
 	    add_colored_text(enc_stat[cap], x);
