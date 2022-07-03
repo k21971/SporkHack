@@ -1591,7 +1591,7 @@ dosacrifice()
 						u.ublesscnt = rnz(300 + (50 * u.ugifts));
 						exercise(A_WIS, TRUE);
                                                 #ifdef LIVELOG
-                                                    livelog_printf("had a %s bestowed upon %s by %s", an(xname(otmp)), uhim(), u_gname())
+                                                    livelog_printf("had %s bestowed upon %s by %s", an(xname(otmp)), uhim(), u_gname())
                                                 #endif
                                                 ;
 						makeknown(otmp->otyp);
