@@ -26,7 +26,6 @@ O       options set options
 \       known   display list of what's been discovered
 v       version display version number
 V       history display game history
-X       explore switch the game to explore (discovery) mode
 ^A      again   redo the previous command (^A denotes the keystroke CTRL-A)
 ^R      redraw  redraw the screen
 ^P      prevmsg repeat previous message (subsequent ^P's repeat earlier ones)
@@ -64,6 +63,7 @@ T       takeoff take off some armor
 w       wield   wield a weapon  (w-  wield nothing)
 W       wear    put on some armor
 x       xchange swap wielded and secondary weapons
+X       twoweapon toggle two-weapon combat
 z       zap     zap a wand
 Z       Zap     cast a spell
 <       up      go up the stairs
