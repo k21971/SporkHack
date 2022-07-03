@@ -167,6 +167,8 @@ struct obj* tobj;
 {
 	struct obj *otmp;
 	struct trap *ttmp;
+        struct obj *egg  = sobj_at(EGG, rx, ry),
+                   *safe = sobj_at(IRON_SAFE, rx, ry);
 
 	if (!can_reach_floor()) return FALSE;
 
@@ -199,7 +201,7 @@ struct obj* tobj;
 	 * The overcomplex wording is because all the monster-naming functions operate
 	 * on actual instances of the monsters, and we're dealing with just an index
 	 * so we can avoid things like "a owlbear", etc. */
-	if (otmp = sobj_at(EGG,rx,ry)) {
+	if (egg) {
 		if (Hallucination) {
 			pline("You listen to the egg and guess... %s?",rndmonnam());
 		} else {
@@ -213,8 +215,8 @@ struct obj* tobj;
 	}
 
 	/* using a stethoscope on a safe?  You safe-cracker, you. */
-	if (otmp = sobj_at(IRON_SAFE,rx,ry)) {
-		pick_lock(tobj,rx,ry);
+	if (safe) {
+		pick_lock(tobj,rx,ry,safe);
 		return TRUE;
 	}
 
@@ -3062,7 +3064,7 @@ doapply()
 	case CREDIT_CARD:
 #endif
 	case SKELETON_KEY:
-		(void) pick_lock(obj,0,0);
+		(void) pick_lock(obj,0,0,NULL);
 		break;
 	case PICK_AXE:
 	case DWARVISH_MATTOCK:

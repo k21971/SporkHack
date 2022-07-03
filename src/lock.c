@@ -227,10 +227,72 @@ reset_pick()
 #endif /* OVL0 */
 #ifdef OVLB
 
+/* pick a tool for autounlock */
+struct obj *
+autokey(opening)
+boolean opening; /* True: key, pick, or card; False: key or pick */
+{
+    struct obj *o, *key, *pick, *card, *akey, *apick, *acard;
+
+    /* mundane item or regular artifact or own role's quest artifact */
+    key = pick = card = (struct obj *) 0;
+    /* other role's quest artifact (Rogue's Key or Tourist's Credit Card) */
+    akey = apick = acard = (struct obj *) 0;
+    for (o = invent; o; o = o->nobj) {
+        if (any_quest_artifact(o) && !is_quest_artifact(o)) {
+            switch (o->otyp) {
+            case SKELETON_KEY:
+                if (!akey)
+                    akey = o;
+                break;
+            case LOCK_PICK:
+                if (!apick)
+                    apick = o;
+                break;
+            case CREDIT_CARD:
+                if (!acard)
+                    acard = o;
+                break;
+            default:
+                break;
+            }
+        } else {
+            switch (o->otyp) {
+            case SKELETON_KEY:
+                if (!key)
+                    key = o;
+                break;
+            case LOCK_PICK:
+                if (!pick)
+                    pick = o;
+                break;
+            case CREDIT_CARD:
+                if (!card)
+                    card = o;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    if (!opening)
+        card = acard = 0;
+    /* only resort to other role's quest artifact if no other choice */
+    if (!key && !pick && !card)
+        key = akey;
+    if (!pick && !card)
+        pick = apick;
+    if (!card)
+        card = acard;
+    return key ? key : pick ? pick : card ? card : 0;
+}
+
 int
-pick_lock(pick,rx,ry) /* pick a lock with a given object */
+pick_lock(pick,rx,ry,container) /* pick a lock with a given object */
 register struct	obj	*pick;
-int rx,ry;
+xchar rx,ry; /* coordinates of doors/container, for autounlock: does not
+                prompt for direction if these are set */
+struct obj *container; /* container, for autounlock */
 {
 	/* rx and ry are passed only from the use-stethoscope stuff */
 	int picktyp, c, ch;
@@ -238,6 +300,7 @@ int rx,ry;
 	struct rm	*door;
 	struct obj	*otmp;
 	char qbuf[QBUFSZ];
+	boolean autounlock = (rx != 0 && ry != 0) || (container != NULL);
 
 	picktyp = pick->otyp;
 
@@ -282,12 +345,13 @@ int rx,ry;
 	}
 	ch = 0;		/* lint suppression */
 
-	/* If this is a stethoscope, we know where we came from */
-	if (picktyp == STETHOSCOPE) {
-		cc.x = rx; cc.y = ry;
-	} else {
-		if(!get_adjacent_loc((char *)0, "Invalid location!", u.ux, u.uy, &cc)) return 0;
-	}
+        if (rx != 0 && ry != 0) { /* autounlock; caller has provided coordinates */
+            cc.x = rx;
+            cc.y = ry;
+        } else if (!get_adjacent_loc((char *) 0, "Invalid location!",
+                                     u.ux, u.uy, &cc)) {
+            return(0);
+        }
 
 	/* Very clumsy special case for this, but forcing the player to
 	 * a)pply > just to open a safe, when a)pply . works in all other cases? */
@@ -311,8 +375,10 @@ int rx,ry;
 
 	    count = 0;
 	    c = 'n';			/* in case there are no boxes here */
-	    for(otmp = level.objects[cc.x][cc.y]; otmp; otmp = otmp->nexthere)
-		if (Is_box(otmp)) {
+	    for (otmp = level.objects[cc.x][cc.y]; otmp; otmp = otmp->nexthere)
+                /* autounlock on boxes: only the one that just informed you it was
+                 * locked. Don't include any other boxes which might be here. */
+                if ((!autounlock && Is_box(otmp)) || (otmp == container)) {
 		    ++count;
 		    if (!can_reach_floor()) {
 			You_cant("reach %s from up here.", the(xname(otmp)));
@@ -324,14 +390,24 @@ int rx,ry;
 		    else if (!otmp->olocked) verb = "lock", it = 1;
 		    else if (picktyp != LOCK_PICK) verb = "unlock", it = 1;
 		    else verb = "pick";
-			Sprintf(qbuf, "There is %s here, %s %s?",
-					safe_qbuf("", sizeof("There is  here, unlock its lock?"),
-					doname(otmp), an(simple_typename(otmp->otyp)), "a box"),
-				verb, it ? "it" : "its lock");
+                    if (autounlock) {
+                        Sprintf(qbuf, "Unlock it with %s?", yname(pick));
+                        c = yn(qbuf);
+                        if (c == 'n')
+                            return 0;
+                    } else {
+                        /* "There is <a box> here; <verb> <it|its lock>?" */
+                        Sprintf(qbuf, "There is %s here, %s %s?",
+                                        safe_qbuf("", sizeof("There is  here, unlock its lock?"),
+                                        doname(otmp), an(simple_typename(otmp->otyp)), "a box"),
+                                verb, it ? "it" : "its lock");
 
-		    c = ynq(qbuf);
-		    if(c == 'q') return(0);
-		    if(c == 'n') continue;
+                        c = ynq(qbuf);
+                        if (c == 'q')
+                            return 0;
+                        if (c == 'n')
+                            continue;
+                    }
 
 			 if (otmp->otyp == IRON_SAFE && picktyp != STETHOSCOPE) {
 				 You("aren't sure how to go about opening the safe that way.");
@@ -352,6 +428,11 @@ int rx,ry;
 			return 0;
 		    }
 #endif
+                    else if (autounlock && !touch_artifact(pick, &youmonst)) {
+                        /* note: for !autounlock, apply already did touch check */
+                        return 1;
+                    }
+
 		    switch(picktyp) {
 #ifdef TOURIST
 			case CREDIT_CARD:
@@ -430,11 +511,17 @@ int rx,ry;
 		    }
 #endif
 
-		    Sprintf(qbuf,"%sock it?",
-			(door->doormask & D_LOCKED) ? "Unl" : "L" );
+                Sprintf(qbuf, "%s it%s%s?",
+                        (door->doormask & D_LOCKED) ? "Unlock" : "Lock",
+                        autounlock ? " with " : "",
+                        autounlock ? yname(pick) : "");
 
 		    c = yn(qbuf);
 		    if(c == 'n') return(0);
+
+                /* note: for !autounlock, 'apply' already did touch check */
+                if (autounlock && !touch_artifact(pick, &youmonst))
+                    return 1;
 
 		    switch(picktyp) {
 #ifdef TOURIST
@@ -592,14 +679,22 @@ doopen_indir(x, y)		/* try to open a door in direction u.dx/u.dy */
 
 	if (!(door->doormask & D_CLOSED)) {
 	    const char *mesg;
+            boolean locked = FALSE;
+            struct obj* unlocktool;
 
 	    switch (door->doormask) {
 	    case D_BROKEN: mesg = " is broken"; break;
 	    case D_NODOOR: mesg = "way has no door"; break;
 	    case D_ISOPEN: mesg = " is already open"; break;
-	    default:	   mesg = " is locked"; break;
+	    default:
+                mesg = " is locked";
+                locked = TRUE;
+                break;
 	    }
 	    pline("This door%s.", mesg);
+            if (locked && flags.autounlock && (unlocktool = autokey(TRUE)) != 0) {
+                return pick_lock(unlocktool, cc.x, cc.y, (struct obj *) 0);
+            }
 	    if (Blind) feel_location(cc.x,cc.y);
 	    return(0);
 	}
