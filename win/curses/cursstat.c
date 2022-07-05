@@ -91,6 +91,11 @@ static const struct statcolor default_colors[] = {
     {"Ill", CLR_BRIGHT_MAGENTA},
     {"FoodPois", CLR_BRIGHT_MAGENTA},
     {"Slime", CLR_BRIGHT_MAGENTA},
+    {"Lev", CLR_BRIGHT_BLUE},
+    {"Fly", CLR_BRIGHT_BLUE},
+    {"Ride", CLR_BRIGHT_BLUE},
+    {"Stone", CLR_BRIGHT_BLUE},
+    {"Strngl", CLR_BRIGHT_BLUE},
     {NULL, NO_COLOR},
 };
 
@@ -883,6 +888,10 @@ curses_add_statuses(WINDOW *win, boolean align_right,
     statprob("Ill",      (u.usick_type & SICK_NONVOMITABLE));
     statprob("FoodPois", (u.usick_type & SICK_VOMITABLE));
     statprob("Slime",    Slimed);
+    statprob("Lev",      Levitation);
+    statprob("Fly",      Flying);
+    statprob("Stone",    Stoned);
+    statprob("Strngl",   Strangled);
 
     /* Encumbrance */
     int enc = near_capacity();
