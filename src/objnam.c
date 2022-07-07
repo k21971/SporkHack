@@ -14,9 +14,6 @@ STATIC_DCL char *FDECL(strprepend,(char *,const char *));
 static boolean FDECL(wishymatch, (const char *,const char *,BOOLEAN_P));
 #endif
 static char *NDECL(nextobuf);
-#ifdef SORTLOOT
-char * FDECL(xname2, (struct obj *, boolean));
-#endif
 
 struct Jitem {
 	int item;
@@ -235,15 +232,6 @@ boolean juice;	/* whether or not to append " juice" to the name */
 char *
 xname(obj)
 register struct obj *obj;
-#ifdef SORTLOOT
-{
-	return xname2(obj, FALSE);
-}
-char *
-xname2(obj, ignore_oquan)
-register struct obj *obj;
-boolean ignore_oquan;
-#endif
 {
 	register char *buf;
 	register int typ = obj->otyp;
@@ -492,9 +480,6 @@ boolean ignore_oquan;
 	default:
 		Sprintf(buf,"glorkum %d %d %d", obj->oclass, typ, obj->spe);
 	}
-#ifdef SORTLOOT
-	if (!ignore_oquan)
-#endif
 	if (obj->quan != 1L) Strcpy(buf, makeplural(buf));
 
 	if (obj->onamelth && obj->dknown) {
