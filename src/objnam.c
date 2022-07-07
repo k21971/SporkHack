@@ -925,7 +925,7 @@ struct obj *obj;
 {
 	if (obj->otyp == CORPSE)
 	    return corpse_xname(obj, TRUE);
-	return xname2(obj, TRUE);
+	return xname(obj);
 }
 #endif /* SORTLOOT */
 
