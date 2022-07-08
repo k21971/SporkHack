@@ -287,7 +287,7 @@ register struct monst *mtmp;
 	if (!Upolyd) {
 		tmp += hitval(uwep, mtmp);
 		tmp += weapon_hit_bonus(uwep);  /* picks up bare-handed bonuses */
-	} 
+	}
 	/* Let's make UNSKILLED matter, shall we?  If you're UNSKILLED,
 	 * you never get more than an 75% chance to hit anything.
 	 * (we'll let the fisticuffs guys slide on this, they've got
@@ -2097,7 +2097,6 @@ register struct monst *mon;
 register int tmp;
 {
 	struct attack *mattk, alt_attk;
-	struct obj *weapon;
 	int	i, sum[NATTK], hittmp = 0;
 	int	nsum = 0;
 	int	dhit = 0;
@@ -2126,7 +2125,7 @@ use_weapon:
 			/* KMH -- Don't accumulate to-hit bonuses */
 			if (uwep) tmp -= hittmp;
 			/* Enemy dead, before any special abilities used */
-			if (!known_hitum(mon,weapon,&dhit,mattk,dieroll)) {
+			if (!known_hitum(mon,uwep,&dhit,mattk,dieroll)) {
 			    sum[i] = 2;
 			    break;
 			} else sum[i] = dhit;
